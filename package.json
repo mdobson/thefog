@@ -1,6 +1,6 @@
 {
-  "name": "wsfogserver",
-  "version": "0.0.2",
+  "name": "thefog",
+  "version": "0.0.1",
   "description": "Fog server implementation",
   "main": "server.js",
   "scripts": {
