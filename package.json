@@ -1,0 +1,14 @@
+{
+  "name": "wsfogserver",
+  "version": "0.0.1",
+  "description": "Fog server implementation",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mdobs",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "~0.4.31"
+  }
+}
