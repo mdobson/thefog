@@ -9,7 +9,12 @@ function Server(options) {
   var opts = options || {};
   var self = this;
   this.port = opts.port || 5050;
-  this.server = new wss({port: this.port});
+  this.hostingServer = opts.server || null;
+  if(!this.hostingServer) {
+    this.server = new wss({port: this.port});
+  } else {
+    this.server = new wss({server: this.hostingServer});
+  }
   this.protocol = new WSProtocol();
   this.clients = new ClientMappings();
 
