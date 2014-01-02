@@ -5,7 +5,6 @@ function WSPacket(options){
     this.raw = packet;
     this.message = JSON.parse(packet);
   } else {
-    this.raw = JSON.stringify(packet);
     this.message = packet;
   }
 }
@@ -20,8 +19,31 @@ WSPacket.prototype.valid = function() {
   }
 };
 
+WSPacket.prototype.serialize = function() {
+  this.raw = JSON.stringify(this.message);
+  return this.raw;
+};
+
+WSPacket.prototype.setAction = function(action) {
+  this.message.action = action;
+};
+
 WSPacket.prototype.action = function() {
   return this.message.action;
+};
+
+WSPacket.prototype.addData = function(k, v) {
+  if(!this.message.data) {
+    this.message.data = {};
+  }
+  this.message.data[k] = v;
+};
+
+WSPacket.prototype.setData = function(o) {
+  if(!this.message.data) {
+    this.message.data = {};
+  }
+  this.message.data = o;
 };
 
 WSPacket.prototype.data = function() {
