@@ -1,5 +1,6 @@
 var ws = require('ws'),
     wss = require('ws').Server,
+    Client = require('./fogclient.js'),
     WSProtocol = require('./wsprotocol.js');
 
 function Server(options) {
