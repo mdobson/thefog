@@ -10,7 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "ws": "~0.4.31",
-    "node-uuid": "~1.4.1",
-    "extend": "~1.2.1"
+    "node-uuid": "~1.4.1"
   }
 }
