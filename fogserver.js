@@ -22,3 +22,4 @@ Server.prototype.on = function(event, cb) {
 };
 
 module.exports = Server;
+module.Client = Client;
