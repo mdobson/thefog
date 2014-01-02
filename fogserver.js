@@ -8,7 +8,7 @@ var ws = require('ws'),
 function Server(options) {
   var opts = options || {};
   var self = this;
-  this.port = options.port || 5000;
+  this.port = opts.port || 5050;
   this.server = new wss({port: this.port});
   this.protocol = new WSProtocol();
   this.clients = new ClientMappings();
@@ -16,8 +16,8 @@ function Server(options) {
   this.server.on('connection', function(ws) {
     var clientId = uuid.v1();
     self.clients.subscribe(ws, clientId);
-    var packet = new Packet({'action':'ACK'});
-    ws.send(packet.serialize);
+    var packet = new Packet({'action':'ACK', 'data':{'clientId':clientId}});
+    ws.send(packet.serialize());
     ws.on('message', function(message) {
       self.protocol.parse(message);
     });
@@ -29,7 +29,7 @@ Server.prototype.on = function(event, cb) {
 };
 
 Server.prototype.send = function(clientId, packet) {
-  var ws = this.clients.get(clientId);
+  var ws = this.clients.getMapping(clientId);
   ws.send(packet.serialize());
 };
 
@@ -41,10 +41,10 @@ ClientMappings.prototype.subscribe = function(ws, clientId) {
   this.mappings[clientId] = ws;
 };
 
-ClientMappings.prototype.get = function(clientId) {
+ClientMappings.prototype.getMapping = function(clientId) {
   return this.mappings[clientId];
 };
 
 
-module.exports = Server;
-module.Client = Client;
+exports.Server = Server;
+exports.Client = Client;

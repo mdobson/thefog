@@ -1,7 +1,7 @@
 function WSPacket(options){
   var opts = options || {};
-  var packet = options.packet || null;
-  if(typeof packet == 'String') {
+  var packet = opts || null;
+  if(typeof packet == 'string') {
     this.raw = packet;
     this.message = JSON.parse(packet);
   } else {
@@ -10,7 +10,7 @@ function WSPacket(options){
 }
 
 WSPacket.prototype.valid = function() {
-  if(!this.raw || !this.message) {
+  if(!this.message) {
     return false;
   } else if (!this.message.action) {
     return false;
@@ -28,7 +28,7 @@ WSPacket.prototype.setAction = function(action) {
   this.message.action = action;
 };
 
-WSPacket.prototype.action = function() {
+WSPacket.prototype.getAction = function() {
   return this.message.action;
 };
 
@@ -46,7 +46,7 @@ WSPacket.prototype.setData = function(o) {
   this.message.data = o;
 };
 
-WSPacket.prototype.data = function() {
+WSPacket.prototype.getData = function() {
   if(this.message.data) {
     return this.message.data;
   } else {

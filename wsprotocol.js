@@ -10,10 +10,10 @@ util.inherits(WSProtocol, events.EventEmitter);
 WSProtocol.prototype.parse = function(packet) {
   var p = new WSPacket(packet);
   if(p.valid()) {
-    if(p.data()) {
-      this.emit(p.action(), p.data());
+    if(p.getData()) {
+      this.emit(p.getAction(), p.getData());
     } else {
-      this.emit(p.action());
+      this.emit(p.getAction());
     }
   } else {
     this.emit('error', 'invalid packet');
