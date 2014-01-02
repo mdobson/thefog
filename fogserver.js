@@ -48,3 +48,4 @@ ClientMappings.prototype.getMapping = function(clientId) {
 
 exports.Server = Server;
 exports.Client = Client;
+exports.Packet = Packet;
