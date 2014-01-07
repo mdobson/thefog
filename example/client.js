@@ -15,7 +15,9 @@ client.on('ACK', function(p) {
 client.on('PING', function(p) {
   console.log('Just pinged by server.');
   var p2 = new Packet({'action':'ACK'});
-  client.respondTo(p, p2);
+  client.respondTo(p, p2, function(err, packet){
+  	console.log('This server sure is chatty!');
+  });
 });
 
 client.on('error', function(data) {

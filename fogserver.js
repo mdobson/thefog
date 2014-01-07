@@ -34,7 +34,7 @@ function Server(options) {
         packet.setClientId(clientId);
         if(self.returnMessages.expectingCallback(packet)) {
           var cb = self.returnMessages.callback(packet);
-          cb(packet);
+          cb(null, packet);
         } else {
           self.emit(packet.getAction(), packet);
         }

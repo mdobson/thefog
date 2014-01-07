@@ -21,7 +21,12 @@ Client.prototype.open = function(cb) {
   this.socket.on('error', this.emit.bind(this));
   this.socket.on('message', function(data, flags) {
     self.protocol.parse(data, function(err, p){
-      self.emit(p.getAction(), p);
+      if(self.returnMessages.expectingCallback(p)) {
+        var cb = self.returnMessages.callback(p);
+        cb(null, p);
+      } else {
+        self.emit(p.getAction(), p);
+      }
     }); 
   });
 };

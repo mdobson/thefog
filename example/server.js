@@ -8,6 +8,8 @@ server.on('PONG', function(p) {
   var p2 = new Packet({'action':'PING'});
   server.send(p.getClientId(), p2, function(err, packet){
     console.log('Got a response from the ping!');
+    var p3 = new Packet({'action':'ACKACK'});
+    server.respondTo(packet, p3);
   });
 });
 
