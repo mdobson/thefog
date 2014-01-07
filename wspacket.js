@@ -1,9 +1,16 @@
+var uuid = require('node-uuid');
+
 function WSPacket(options){
   var opts = options || {};
   var packet = opts || null;
+  this.uuid = uuid.v1();
+  this.clientId = null;
   if(typeof packet == 'string') {
     this.raw = packet;
     this.message = JSON.parse(packet);
+    if(this.message.uuid) {
+      this.uuid = this.message.uuid;
+    }
   } else {
     this.message = packet;
   }
@@ -19,7 +26,24 @@ WSPacket.prototype.valid = function() {
   }
 };
 
+WSPacket.prototype.getPacketId = function() {
+  return this.uuid;
+};
+
+WSPacket.prototype.setPacketId = function(packetId) {
+  this.uuid = packetId;
+};
+
+WSPacket.prototype.getClientId = function() {
+  return this.clientId;
+};
+
+WSPacket.prototype.setClientId = function(clientId) {
+  this.clientId = clientId;
+};
+
 WSPacket.prototype.serialize = function() {
+  this.message.uuid = this.uuid;
   this.raw = JSON.stringify(this.message);
   return this.raw;
 };
