@@ -62,6 +62,10 @@ Server.prototype.respondTo = function(fromPacket, toPacket, cb) {
   ws.send(toPacket.serialize());
 }
 
+Server.prototype.getClients = function() {
+  return Object.keys(this.clients.mappings);
+}
+
 function ClientMappings() {
   this.mappings = {};
 }
