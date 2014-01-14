@@ -41,10 +41,17 @@ Client.prototype.respondTo = function(fromPacket, toPacket, cb) {
 };
 
 Client.prototype.send = function(packet, cb) {
+  
   if(typeof cb == 'function') {
     this.returnMessages.subscribe(packet, cb);
   }
-  this.socket.send(packet.serialize());
+
+  try {
+    this.socket.send(packet.serialize());
+  }catch(err){
+    if(typeof cb == 'function')
+      cb(err);
+  }
 };
 
 module.exports = Client;
