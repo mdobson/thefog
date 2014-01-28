@@ -24,8 +24,8 @@ function Server(options) {
   this.returnMessages = new CallbackMappings();
 
   this.server.on('connection', function(ws) {
-    var clientId = uuid.v1();
-    self.clients.subscribe(ws, clientId);
+    //var clientId = uuid.v1();
+    //self.clients.subscribe(ws, clientId);
     var packet = new Packet({'action':'ACK'});
     ws.send(packet.serialize());
     ws.on('error', self.emit.bind(self));
@@ -36,7 +36,7 @@ function Server(options) {
           var cb = self.returnMessages.callback(packet);
           cb(null, packet);
         } else {
-          self.emit(packet.getAction(), packet);
+          self.emit(packet.getAction(), packet, ws);
         }
       });
     });
@@ -60,11 +60,15 @@ Server.prototype.respondTo = function(fromPacket, toPacket, cb) {
   toPacket.setPacketId(packetId);
   var ws = this.clients.getMapping(fromPacket.getClientId());
   ws.send(toPacket.serialize());
-}
+};
 
 Server.prototype.getClients = function() {
   return Object.keys(this.clients.mappings);
-}
+};
+
+Server.prototype.subscribe = function(client, clientId) {
+  return this.clients.subscribe(client, clientId);
+};
 
 function ClientMappings() {
   this.mappings = {};
