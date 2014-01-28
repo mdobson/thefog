@@ -24,14 +24,11 @@ function Server(options) {
   this.returnMessages = new CallbackMappings();
 
   this.server.on('connection', function(ws) {
-    //var clientId = uuid.v1();
-    //self.clients.subscribe(ws, clientId);
     var packet = new Packet({'action':'ACK'});
     ws.send(packet.serialize());
     ws.on('error', self.emit.bind(self));
     ws.on('message', function(message) {
       self.protocol.parse(message, function(err, packet) {
-        packet.setClientId(clientId);
         if(self.returnMessages.expectingCallback(packet)) {
           var cb = self.returnMessages.callback(packet);
           cb(null, packet);
@@ -44,11 +41,11 @@ function Server(options) {
 }
 util.inherits(Server, events.EventEmitter);
 
-Server.prototype.send = function(clientId, packet, cb) {
+Server.prototype.send = function(packet, cb) {
   if(typeof cb == 'function') {
     this.returnMessages.subscribe(packet, cb);
   }
-  var ws = this.clients.getMapping(clientId);
+  var ws = this.clients.getMapping(packet.getClientId());
   ws.send(packet.serialize());
 };
 

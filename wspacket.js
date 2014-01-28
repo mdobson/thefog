@@ -11,6 +11,9 @@ function WSPacket(options){
     if(this.message.uuid) {
       this.uuid = this.message.uuid;
     }
+    if(this.message.clientId) {
+      this.clientId = this.message.clientId;
+    }
   } else {
     this.message = packet;
   }
@@ -44,6 +47,7 @@ WSPacket.prototype.setClientId = function(clientId) {
 
 WSPacket.prototype.serialize = function() {
   this.message.uuid = this.uuid;
+  this.message.clientId = this.clientId;
   this.raw = JSON.stringify(this.message);
   return this.raw;
 };
