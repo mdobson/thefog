@@ -31,7 +31,11 @@ function Server(options) {
       self.protocol.parse(message, function(err, packet) {
         if(self.returnMessages.expectingCallback(packet)) {
           var cb = self.returnMessages.callback(packet);
-          cb(null, packet);
+          if(packet.error()) {
+            cb(packet.error());
+          } else {
+            cb(null, packet);
+          }
         } else {
           self.emit(packet.getAction(), packet, ws);
         }

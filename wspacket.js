@@ -45,6 +45,10 @@ WSPacket.prototype.setClientId = function(clientId) {
   this.clientId = clientId;
 };
 
+WSPacket.prototype.error = function() {
+  return this.data.error;
+};
+
 WSPacket.prototype.serialize = function() {
   this.message.uuid = this.uuid;
   this.message.clientId = this.clientId;
