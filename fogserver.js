@@ -27,6 +27,7 @@ function Server(options) {
     var packet = new Packet({'action':'ACK'});
     ws.send(packet.serialize());
     ws.on('error', self.emit.bind(self));
+    ws.on('close', self.emit.bind(self));
     ws.on('message', function(message) {
       self.protocol.parse(message, function(err, packet) {
         if(self.returnMessages.expectingCallback(packet)) {
