@@ -18,8 +18,8 @@ Client.prototype.open = function(cb) {
   var self = this;
   this.socket = new ws(this.endpoint);
   this.socket.on('open', cb);
-  this.socket.on('error', this.emit.bind(this));
-  this.socket.on('close', this.emit.bind(this));
+  this.socket.on('error', this.emit.bind(this, 'error'));
+  this.socket.on('close', this.emit.bind(this, 'close'));
   this.socket.on('message', function(data, flags) {
     self.protocol.parse(data, function(err, p){
       if(self.returnMessages.expectingCallback(p)) {
