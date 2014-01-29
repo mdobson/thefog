@@ -1,6 +1,6 @@
 {
   "name": "thefog",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Fog server implementation",
   "main": "fogserver.js",
   "scripts": {
