@@ -46,7 +46,7 @@ WSPacket.prototype.setClientId = function(clientId) {
 };
 
 WSPacket.prototype.error = function() {
-  return this.data.error;
+  return this.message.error;
 };
 
 WSPacket.prototype.serialize = function() {
